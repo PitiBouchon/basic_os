@@ -1,0 +1,6 @@
+# Jetbrains IDE
+.idea/
+
+# Compiled binary
+target/
+Cargo.lock

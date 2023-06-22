@@ -1,0 +1,96 @@
+[config]
+default_to_workspace = false
+
+[env]
+CPUS = 2
+MEMORY = "512M"
+QEMU_RISCV = "qemu-system-riscv64"
+QEMU_X86 = "qemu-system-x86_64.exe"
+QEMU_ARM = "qemu-system-aarch64.exe"
+QEMU_RISCV_OPTS = """
+-machine virt \
+-kernel target/riscv64imac-unknown-none-elf/debug/basic_os \
+"""
+QEMU_X86_OPTS = """
+-machine microvm \
+-kernel target/x86_64-unknown-none/debug/basic_os \
+"""
+QEMU_ARM_OPTS = """
+-cpu cortex-a76 \
+-machine virt \
+-kernel target/aarch64-unknown-none/debug/basic_os \
+"""
+QEMU_OPTS = """
+-smp ${CPUS} \
+-m ${MEMORY} \
+-nographic \
+"""
+QEMU_GDB_OPTS = "-S -gdb tcp::26000" # The port 26000 must be the same as in the .gdbinit
+
+[tasks.build]
+command = "cargo"
+args = ["build"]
+
+[tasks.qemu-x86]
+linux_alias = "linux_qemu_x86"
+windows_alias = "windows_qemu_x86"
+
+[tasks.linux_qemu_x86]
+script = "${QEMU_X86} ${QEMU_X86_OPTS} ${QEMU_OPTS}"
+dependencies = ["build"]
+
+[tasks.windows_qemu_x86]
+script = "%QEMU_X86% %QEMU_X86_OPTS% %QEMU_OPTS%"
+dependencies = ["build"]
+
+[tasks.qemu-riscv]
+linux_alias = "linux_qemu_riscv"
+windows_alias = "windows_qemu_riscv"
+
+[tasks.linux_qemu_riscv]
+script = "${QEMU_RISCV} ${QEMU_RISCV_OPTS} ${QEMU_OPTS}"
+dependencies = ["build"]
+
+[tasks.windows_qemu_riscv]
+script = "%QEMU_RISCV% %QEMU_RISCV_OPTS% %QEMU_OPTS%"
+dependencies = ["build"]
+
+[tasks.qemu-arm]
+linux_alias = "linux_qemu_arm"
+windows_alias = "windows_qemu_arm"
+
+[tasks.linux_qemu_arm]
+script = "${QEMU_ARM} ${QEMU_ARM_OPTS} ${QEMU_OPTS}"
+dependencies = ["build"]
+
+[tasks.windows_qemu_arm]
+script = "%QEMU_ARM% %QEMU_ARM_OPTS% %QEMU_OPTS%"
+dependencies = ["build"]
+
+[tasks.qemu-riscv-gdb]
+linux_alias = "linux_qemu_riscv_gdb"
+windows_alias = "windows_qemu_riscv_gdb"
+
+[tasks.linux_qemu_riscv_gdb]
+script = "${QEMU_RISCV} ${QEMU_RISCV_OPTS} ${QEMU_OPTS} ${QEMU_GDB_OPTS}"
+dependencies = ["build"]
+
+[tasks.windows_qemu_riscv_gdb]
+script = "%QEMU_RISCV% %QEMU_RISCV_OPTS% %QEMU_OPTS% %QEMU_GDB_OPTS%"
+dependencies = ["build"]
+
+[tasks.qemu-arm-gdb]
+linux_alias = "linux_qemu_arm_gdb"
+windows_alias = "windows_qemu_arm_gdb"
+
+[tasks.linux_qemu_arm_gdb]
+script = "${QEMU_ARM} ${QEMU_ARM_OPTS} ${QEMU_OPTS} ${QEMU_GDB_OPTS}"
+dependencies = ["build"]
+
+[tasks.windows_qemu_arm_gdb]
+script = "%QEMU_ARM% %QEMU_ARM_OPTS% %QEMU_OPTS% %QEMU_GDB_OPTS%"
+dependencies = ["build"]
+
+[tasks.clean]
+command = "cargo"
+args = ["clean"]
