@@ -1,0 +1,9 @@
+[book]
+authors = ["Pierre POLLET"]
+language = "en"
+multilingual = false
+src = "src"
+title = "BasicOs"
+
+[output.html.playground]
+runnable = false
