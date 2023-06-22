@@ -1,0 +1,26 @@
+[package]
+name = "basic_os"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[workspace]
+
+members = [
+    "lib/sbi_print",
+]
+
+#[profile.dev]
+#panic = "abort"
+#
+#[profile.release]
+#panic = "abort"
+
+[dependencies]
+riscv = "0.10.1"
+sbi = "0.2.0"
+fdt = "0.1.5"
+spin = "0.9.6"
+bit_field = "0.10.2"
+sbi_print = { path = "lib/sbi_print" }
