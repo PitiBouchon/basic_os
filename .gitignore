@@ -3,3 +3,4 @@
 
 # Compiled binary
 target/
+Cargo.lock
