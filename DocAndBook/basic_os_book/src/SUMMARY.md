@@ -1,11 +1,11 @@
 # Summary
 
-[Setup](./setup_guide.md)
+[Setup](./readme.md)
 
-# Basic
+# RiscV Booting
 
-- [Entry](basic/entry.md)
-- [HardId and DeviceTree](basic/riscv_hartid_devicetree.md)
+- [Entry](riscv_booting/entry.md)
+- [HardId and DeviceTree](riscv_booting/riscv_hartid_devicetree.md)
 
 -----------
 

@@ -20,11 +20,13 @@ members = [
 #panic = "abort"
 
 [dependencies]
+spin = "0.9.6"
+bit_field = "0.10.2"
+
+[target.'cfg(target_arch = "riscv64")'.dependencies]
 riscv = "0.10.1"
 sbi = "0.2.0"
 fdt = "0.1.5"
-spin = "0.9.6"
-bit_field = "0.10.2"
 sbi_print = { path = "lib/arch/riscv/sbi_print" }
 page_table = { path = "lib/arch/riscv/page_table" }
 page_alloc = { path = "lib/arch/riscv/page_alloc" }

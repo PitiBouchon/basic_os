@@ -18,6 +18,13 @@ You can use the usual commands `cargo build` and `cargo run` to run the OS with 
 
 > `cargo run` just does `cargo make qemu` (see `.cargo/config.toml`) which is described in the `Makefile.toml`
 
+### Target
+To setup the target just change the target in the `.cargo/config.toml`
+```toml
+[build]
+target = "riscv64imac-unknown-none-elf"
+```
+
 ## Debugging with gdb
 
 Run in a terminal `cargo make qemu-gdb`

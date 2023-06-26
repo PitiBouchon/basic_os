@@ -9,7 +9,7 @@ SECTIONS
 
     .text : {
         *(.text.entry)
-        ASSERT(. - _kernel_start > 0, "error: no entry code");
+        ASSERT(. - _kernel_start > 0, "Error: no entry code");
         *(.text .text.*)
     }
 
@@ -29,12 +29,12 @@ SECTIONS
     }
 
     .bss : {
-        _start_bss = .;
+        PROVIDE(_start_bss = .);
         . = ALIGN(16);
         *(.sbss .sbss.*) /* do not need to distinguish this from .bss */
         . = ALIGN(16);
         *(.bss .bss.*)
-        _end_bss = .;
+        PROVIDE(_end_bss = .);
     }
 
     PROVIDE(_kernel_end = .);
