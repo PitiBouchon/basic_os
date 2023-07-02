@@ -3,8 +3,6 @@
 #![feature(strict_provenance)]
 #![no_std]
 
-pub mod physical_memory_manager;
-
 use core::alloc::AllocError;
 use core::ptr::NonNull;
 use spin::Mutex;

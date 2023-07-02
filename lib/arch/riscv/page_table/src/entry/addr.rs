@@ -19,13 +19,13 @@ pub struct Sv48;
 pub struct Sv57;
 
 pub trait SatpMode: Sized + Eq + PartialEq + Copy + Clone {
-    const N: usize;
+    const VPN_COUNT: usize;
     fn virtual_page_numbers(va: &VirtualAddr<Self>) -> [VirtualPageNumber; Self::N];
 }
 
 #[cfg(target_pointer_width = "32")]
 impl SatpMode for Sv32 {
-    const N: usize = 2;
+    const VPN_COUNT: usize = 2;
 
     fn virtual_page_numbers(va: &VirtualAddr<Sv32>) -> [VirtualPageNumber; Self::N] {
         [
@@ -37,9 +37,9 @@ impl SatpMode for Sv32 {
 
 #[cfg(target_pointer_width = "64")]
 impl SatpMode for Sv39 {
-    const N: usize = 3;
+    const VPN_COUNT: usize = 3;
 
-    fn virtual_page_numbers(va: &VirtualAddr<Sv39>) -> [VirtualPageNumber; Self::N] {
+    fn virtual_page_numbers(va: &VirtualAddr<Sv39>) -> [VirtualPageNumber; Self::VPN_COUNT] {
         [
             VirtualPageNumber(va.0.get_bits(12..=20)),
             VirtualPageNumber(va.0.get_bits(21..=29)),
@@ -49,9 +49,9 @@ impl SatpMode for Sv39 {
 }
 #[cfg(target_pointer_width = "64")]
 impl SatpMode for Sv48 {
-    const N: usize = 4;
+    const VPN_COUNT: usize = 4;
 
-    fn virtual_page_numbers(va: &VirtualAddr<Sv48>) -> [VirtualPageNumber; Self::N] {
+    fn virtual_page_numbers(va: &VirtualAddr<Sv48>) -> [VirtualPageNumber; Self::VPN_COUNT] {
         [
             VirtualPageNumber(va.0.get_bits(12..=20)),
             VirtualPageNumber(va.0.get_bits(21..=29)),
@@ -62,9 +62,9 @@ impl SatpMode for Sv48 {
 }
 #[cfg(target_pointer_width = "64")]
 impl SatpMode for Sv57 {
-    const N: usize = 5;
+    const VPN_COUNT: usize = 5;
 
-    fn virtual_page_numbers(va: &VirtualAddr<Sv57>) -> [VirtualPageNumber; Self::N] {
+    fn virtual_page_numbers(va: &VirtualAddr<Sv57>) -> [VirtualPageNumber; Self::VPN_COUNT] {
         [
             VirtualPageNumber(va.0.get_bits(12..=20)),
             VirtualPageNumber(va.0.get_bits(21..=29)),
