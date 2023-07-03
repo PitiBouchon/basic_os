@@ -26,7 +26,7 @@ fn parse_reg(values: &[u8]) -> (u64, u64) {
     (address, size)
 }
 
-fn reserved_memory(fdt: &Fdt) -> impl IntoIterator<Item = MemoryRegion> {
+fn reserved_memory<'a>(fdt: &'a Fdt) -> impl IntoIterator<Item = MemoryRegion> + 'a {
     fdt.find_node("/reserved-memory")
         .map(|reserved_memory_node| {
             reserved_memory_node.children().map(move |reserved_memory| {

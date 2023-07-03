@@ -36,7 +36,7 @@ impl<MODE: SatpMode> PageTable<MODE> {
 
     pub fn get_phys_addr_perm(&self, va: &VirtualAddr<MODE>) -> (PhysicalAddr, PTEPermission)
     where
-        [(); MODE::N]:,
+        [(); MODE::VPN_COUNT]:,
     {
         let page_numbers = va.virtual_page_numbers().into_iter().rev();
         let mut page_table = self;
@@ -69,7 +69,7 @@ impl<MODE: SatpMode> PageTable<MODE> {
         perm: PTEPermission,
         _rsw: u8,
     ) where
-        [(); MODE::N]:,
+        [(); MODE::VPN_COUNT]:,
     {
         assert!(size > 0);
         let va_end = va.add_offset(size).page_round_up();
@@ -87,7 +87,7 @@ impl<MODE: SatpMode> PageTable<MODE> {
 
     pub fn walk_alloc(&mut self, va: &VirtualAddr<MODE>) -> &mut PageTableEntry
     where
-        [(); MODE::N]:,
+        [(); MODE::VPN_COUNT]:,
     {
         let mut page_numbers = va.virtual_page_numbers().into_iter().rev();
         let mut page_table = self;

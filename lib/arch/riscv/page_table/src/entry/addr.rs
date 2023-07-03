@@ -20,7 +20,7 @@ pub struct Sv57;
 
 pub trait SatpMode: Sized + Eq + PartialEq + Copy + Clone {
     const VPN_COUNT: usize;
-    fn virtual_page_numbers(va: &VirtualAddr<Self>) -> [VirtualPageNumber; Self::N];
+    fn virtual_page_numbers(va: &VirtualAddr<Self>) -> [VirtualPageNumber; Self::VPN_COUNT];
 }
 
 #[cfg(target_pointer_width = "32")]
@@ -80,7 +80,7 @@ impl SatpMode for Sv57 {
 // }
 
 #[derive(Debug, Eq, PartialEq, Clone, Copy)]
-pub struct VirtualAddr<MODE: SatpMode>(usize, core::marker::PhantomData<MODE>);
+pub struct VirtualAddr<MODE: SatpMode>(usize, PhantomData<MODE>);
 
 #[derive(Debug)]
 pub struct VirtualPageNumber(pub usize);
@@ -97,7 +97,7 @@ pub const fn page_round_up(addr: usize) -> usize {
 }
 
 impl<MODE: SatpMode> VirtualAddr<MODE> {
-    pub fn virtual_page_numbers(&self) -> [VirtualPageNumber; MODE::N] {
+    pub fn virtual_page_numbers(&self) -> [VirtualPageNumber; MODE::VPN_COUNT] {
         MODE::virtual_page_numbers(self)
     }
 
