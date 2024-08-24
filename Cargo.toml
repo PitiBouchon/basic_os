@@ -24,7 +24,7 @@ spin = "0.9.6"
 bit_field = "0.10.2"
 
 [target.'cfg(target_arch = "riscv64")'.dependencies]
-riscv = "0.10.1"
+riscv = "0.11.1"
 sbi = "0.2.0"
 fdt = "0.1.5"
 sbi_print = { path = "lib/arch/riscv/sbi_print" }
